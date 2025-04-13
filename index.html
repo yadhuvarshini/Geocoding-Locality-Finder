@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Area & Pincode Lookup</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <h1>Select Area & Pincode</h1>
+
+  <form id="dynamicForm">
+    <label for="dynamicSelect">Choose an area:</label>
+    <select id="dynamicSelect" required>
+      <option value="">-- Select an area --</option>
+      <!-- Options will be populated from data.csv -->
+    </select>
+    <button type="submit" id="submitButton">Submit</button>
+  </form>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>Fetching location and nearby places...</p>
+  </div>
+
+  <div id="response-container">
+    <pre id="response"></pre>
+  </div>
+
+  <div id="places-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

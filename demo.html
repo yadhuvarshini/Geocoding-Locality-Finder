@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Geoapify Locality Finder</title>
+</head>
+<body>
+  <h2>Select Pincode and City</h2>
+  <form id="locationForm">
+    <label for="locationSelect">Choose a location:</label>
+    <select id="locationSelect">
+      <option value="">--Select--</option>
+      <option value="600020,Chennai">600020 - Chennai</option>
+      <option value="600028,Chennai">600028 - Chennai</option>
+      <!-- Add more options as needed -->
+    </select>
+    <button type="submit">Find Localities</button>
+  </form>
+
+  <div id="results">
+    <h3>Localities:</h3>
+    <ul id="localityList"></ul>
+  </div>
+
+  <script>
+    const apiKey = 'YOUR_API_KEY'; // Replace with your actual Geoapify API key
+
+    document.getElementById('locationForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const selectedValue = document.getElementById('locationSelect').value;
+      if (!selectedValue) {
+        alert('Please select a location.');
+        return;
+      }
+
+      const [pincode, city] = selectedValue.split(',');
+      const searchText = `${pincode}, ${city}, India`;
+
+      // Step 1: Geocode the pincode and city to get coordinates and bounding box
+      fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(searchText)}&apiKey=${apiKey}`)
+        .then(response => response.json())
+        .then(geoData => {
+          if (geoData.features.length === 0) {
+            alert('Location not found.');
+            return;
+          }
+
+          const feature = geoData.features[0];
+          const { lat, lon } = feature.properties;
+          const bbox = feature.bbox; // [minLon, minLat, maxLon, maxLat]
+
+          // Step 2: Use the bounding box to find populated places within the area
+          const filter = bbox
+            ? `rect:${bbox[0]},${bbox[1]},${bbox[2]},${bbox[3]}`
+            : `circle:${lon},${lat},2000`; // Fallback to a 2km radius if bbox is unavailable
+
+          fetch(`https://api.geoapify.com/v2/places?categories=place&filter=${filter}&limit=20&apiKey=${apiKey}`)
+            .then(response => response.json())
+            .then(placeData => {
+              const localityList = document.getElementById('localityList');
+              localityList.innerHTML = '';
+
+              if (placeData.features.length === 0) {
+                localityList.innerHTML = '<li>No localities found.</li>';
+                return;
+              }
+
+              placeData.features.forEach(place => {
+                const name = place.properties.name || 'Unnamed locality';
+                const listItem = document.createElement('li');
+                listItem.textContent = name;
+                localityList.appendChild(listItem);
+              });
+            })
+            .catch(error => {
+              console.error('Error fetching places:', error);
+              alert('An error occurred while fetching localities.');
+            });
+        })
+        .catch(error => {
+          console.error('Error fetching geocode data:', error);
+          alert('An error occurred while geocoding the location.');
+        });
+    });
+  </script>
+</body>
+</html>

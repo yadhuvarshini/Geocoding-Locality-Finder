@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+    const select = document.getElementById('dynamicSelect');
     const form = document.getElementById('dynamicForm');
     const submitButton = document.getElementById('submitButton');
     const responsePre = document.getElementById('response');

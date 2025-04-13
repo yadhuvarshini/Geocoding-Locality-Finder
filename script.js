@@ -37,11 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
       placesContainer.innerHTML = '';
   
       const selectedValue = select.value;
-      if (!selectedValue) {
-        alert('Please select an option.');
-        submitButton.disabled = false;
-        return;
-      }
+      // if (!selectedValue) {
+      //   alert('Please select an option.');
+      //   submitButton.disabled = false;
+      //   return;
+      // }
   
       const [area, pincode] = selectedValue.split(',');
       const city = 'Chennai';

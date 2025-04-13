@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-   
+    
     const form = document.getElementById('dynamicForm');
     const submitButton = document.getElementById('submitButton');
     const responsePre = document.getElementById('response');
@@ -30,17 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
   
     form.addEventListener('submit', async (event) => {
       const select = document.getElementById('dynamicSelect');
+      clear()
       event.preventDefault();
-      // submitButton.disabled = true;
+    //   submitButton.disabled = true;
       responsePre.textContent = '';
       placesContainer.innerHTML = '';
   
       const selectedValue = select.value;
-      // if (!selectedValue) {
-      //   alert('Please select an option.');
-      //   submitButton.disabled = false;
-      //   return;
-      // }
+      if (!selectedValue) {
+        alert('Please select an option.');
+        submitButton.disabled = false;
+        return;
+      }
   
       const [area, pincode] = selectedValue.split(',');
       const city = 'Chennai';

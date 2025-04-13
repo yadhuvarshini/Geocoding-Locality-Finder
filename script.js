@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(error => console.error('Error loading the CSV file:', error));
   
     form.addEventListener('submit', async (event) => {
-
+       
       event.preventDefault();
       submitButton.disabled = true;
       responsePre.textContent = '';
@@ -111,8 +111,5 @@ document.addEventListener('DOMContentLoaded', () => {
         responsePre.textContent = 'An error occurred during the process.';
       }
     });
-
-   
-      
   });
   

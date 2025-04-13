@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
     form.addEventListener('submit', async (event) => {
       const select = document.getElementById('dynamicSelect');
-      clear()
       event.preventDefault();
     //   submitButton.disabled = true;
       responsePre.textContent = '';

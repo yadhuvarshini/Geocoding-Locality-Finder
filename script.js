@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('dynamicForm');
     const submitButton = document.getElementById('submitButton');
     const responsePre = document.getElementById('response');
-    const loadingDiv = document.getElementById("loading");
     const placesContainer = document.getElementById('places-container');
     const API_KEY = '37912578b4464f36a6f2f17ce17738e2'; // Replace with your actual Geoapify API key
   
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(error => console.error('Error loading the CSV file:', error));
   
     form.addEventListener('submit', async (event) => {
-      showLoading(true);
 
       event.preventDefault();
       submitButton.disabled = true;
@@ -114,9 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    function showLoading(state) {
-        loadingDiv.style.display = state ? "flex" : "none";
-      }
+   
       
   });
   
